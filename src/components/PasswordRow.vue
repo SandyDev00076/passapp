@@ -14,7 +14,7 @@ const { password, sNo } = defineProps<{
     sNo: number,
 }>();
 
-const { removePassword } = usePasswordsStore();
+const { removePassword, updatePasswordWhenCopied } = usePasswordsStore();
 const router = useRouter();
 
 const showPassword = ref(false);
@@ -30,6 +30,7 @@ const onDeleteClick = () => {
 
 const onCopyClick = async () => {
     await copyToClipboard(password.value);
+    updatePasswordWhenCopied(password.id);
     toast.success("Password copied");
 }
 
@@ -48,6 +49,9 @@ const onEditClick = () => {
         </TableCell>
         <TableCell>
             {{ showPassword ? password.value : new Array(password.value.length).fill("*").join("") }}
+        </TableCell>
+        <TableCell>
+            {{ password.numberOfTimesCopied }}
         </TableCell>
         <TableCell class=" flex gap-2">
             <Button variant="outline" size="icon" aria-label="Show/Hide Password" @click="togglePasswordShowIcon()">

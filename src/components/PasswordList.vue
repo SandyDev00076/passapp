@@ -23,6 +23,9 @@ const props = defineProps({
                 <TableHead>
                     Password
                 </TableHead>
+                <TableHead>
+                    # copied
+                </TableHead>
                 <TableHead>Actions</TableHead>
             </TableRow>
         </TableHeader>

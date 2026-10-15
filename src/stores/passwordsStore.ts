@@ -1,6 +1,6 @@
 import type { Password } from "@/types";
 import { defineStore } from "pinia";
-import { ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 
 const PASSWORDS_LOCALSTORAGE_KEY = "pass-collection";
 
@@ -40,6 +40,15 @@ const usePasswordsStore = defineStore("passwords", () => {
     passwordToUpdate.value = newPassword;
   };
 
+  const updatePasswordWhenCopied = (id: string) => {
+    const passwordToUpdate = passwords.value.find((p) => p.id === id);
+    if (!passwordToUpdate) {
+      throw new Error("Error while fetching the password entity");
+    }
+    passwordToUpdate.numberOfTimesCopied++;
+    passwordToUpdate.lastUsedAt = new Date().toISOString();
+  };
+
   watch(
     passwords,
     (newVal) => {
@@ -48,14 +57,21 @@ const usePasswordsStore = defineStore("passwords", () => {
     { deep: true },
   );
 
+  const sortedPasswords = computed(() => {
+    return passwords.value.sort(
+      (a, b) => b.numberOfTimesCopied - a.numberOfTimesCopied,
+    );
+  });
+
   return {
-    passwords,
+    passwords: sortedPasswords,
     passwordsLoaded,
     setPasswords,
     addPassword,
     removePassword,
     fetchPassword,
     editPassword,
+    updatePasswordWhenCopied,
   };
 });
 

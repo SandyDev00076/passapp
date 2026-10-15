@@ -45,7 +45,7 @@ const onEditClick = () => {
         {{ showPassword ? password.value : new Array(password.value.length).fill("*").join("") }}
     </CardContent>
     <CardFooter class="flex gap-2 justify-end">
-        <div class="text-sm">copied {{ password.numberOfTimesCopied }} times</div>
+        <div class="text-sm text-gray-500">copied {{ password.numberOfTimesCopied }} times</div>
         <Button variant="outline" size="icon" aria-label="Show/Hide Password" @click="togglePasswordShowIcon()">
             <EyeIcon v-if="!showPassword" />
             <EyeClosedIcon v-else />

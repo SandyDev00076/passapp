@@ -70,7 +70,8 @@ const toggleShowPassword = () => {
             <FieldGroup>
                 <Field>
                     <FieldLabel for="site-input">Site</FieldLabel>
-                    <Input ref="siteInputBox" required id="site-input" placeholder="Place text here" v-model="site" />
+                    <Input ref="siteInputBox" required id="site-input" placeholder="Upto 36 characters only"
+                        :maxLength="36" v-model="site" />
                     <FieldError v-show="errors.site">Site is required</FieldError>
                 </Field>
                 <Field>
